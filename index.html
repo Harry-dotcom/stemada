@@ -1007,7 +1007,7 @@ async function loadAllData() {
     showToast('Klik ⚙️ Google Sheets untuk menyambungkan data','ℹ️',5000);
     loadStaticJadwal(); return;
   }
-  setStatus('loading'); showToast('Memuat data dari Google Sheets...','🔄',0);
+  setStatus('loading'); showToast('Memuat data...','🔄',0);
   try {
     await Promise.all([loadInfo(),loadJadwal(),loadKegiatan(),loadPengumuman(),loadBacaan()]);
     setStatus('connected'); showToast('Data berhasil dimuat ✓','✅',3000);
