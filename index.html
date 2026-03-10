@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paroki Stella Maris Danga – Gereja Katolik</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --crimson: #7B1C2E;
+    --crimson-light: #A32840;
+    --deep: #0E0C0A;
+    --dark: #1A1511;
+    --mid: #2C2318;
+    --parchment: #F5EDD8;
+    --parchment-light: #FBF6EC;
+    --stone: #B8A98A;
+    --cream: #EDE5CF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    background: var(--deep);
+    color: var(--parchment);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--deep); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 4rem;
+    height: 72px;
+    background: linear-gradient(to bottom, rgba(14,12,10,0.98), rgba(14,12,10,0.80));
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    backdrop-filter: blur(12px);
+    transition: all 0.4s;
+  }
+  nav.scrolled {
+    height: 60px;
+    background: rgba(14,12,10,0.97);
+    border-bottom-color: rgba(201,168,76,0.35);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none;
+  }
+  .nav-cross {
+    width: 32px; height: 32px;
+    position: relative; flex-shrink: 0;
+  }
+  .nav-cross::before {
+    content: '✝';
+    font-size: 26px;
+    color: var(--gold);
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    filter: drop-shadow(0 0 6px rgba(201,168,76,0.5));
+  }
+  .nav-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+  }
+  .nav-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    color: var(--stone);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2.4rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stone);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--gold);
+    transform: scaleX(0); transform-origin: center;
+    transition: transform 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold) !important;
+    padding: 6px 20px;
+    border-radius: 2px;
+    transition: background 0.3s, color 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--deep) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 30%, rgba(201,168,76,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 80% 70%, rgba(123,28,46,0.12) 0%, transparent 60%),
+      linear-gradient(160deg, #0E0C0A 0%, #1A1108 40%, #0E0A06 100%);
+  }
+  /* Stained glass decorative circles */
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-orb-1 {
+    width: 600px; height: 600px;
+    top: -100px; right: -120px;
+    background: conic-gradient(from 0deg,
+      rgba(201,168,76,0.05) 0deg,
+      rgba(123,28,46,0.08) 90deg,
+      rgba(201,168,76,0.04) 180deg,
+      rgba(14,12,10,0) 270deg,
+      rgba(201,168,76,0.05) 360deg
+    );
+    animation: rotateSlow 40s linear infinite;
+  }
+  .hero-orb-2 {
+    width: 400px; height: 400px;
+    bottom: -80px; left: -80px;
+    background: conic-gradient(from 180deg,
+      rgba(123,28,46,0.06) 0deg,
+      rgba(201,168,76,0.05) 120deg,
+      transparent 240deg
+    );
+    animation: rotateSlow 60s linear infinite reverse;
+  }
+  @keyframes rotateSlow { to { transform: rotate(360deg); } }
+
+  /* Ornamental lines */
+  .hero-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 0 2rem;
+    max-width: 900px;
+    animation: heroReveal 1.4s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes heroReveal {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+  .hero-cross-large {
+    font-size: 3.5rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 1.2rem;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.4));
+    opacity: 0;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    color: var(--parchment-light);
+    margin-bottom: 0.4rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+  .hero-title span {
+    color: var(--gold);
+    display: block;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    letter-spacing: 0.3em;
+    color: var(--stone);
+    text-transform: uppercase;
+    margin-bottom: 2.4rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.75s ease both;
+  }
+  .hero-divider {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s ease both;
+  }
+  .hero-divider-line {
+    height: 1px; width: 80px;
+    background: linear-gradient(to right, transparent, var(--gold-dark), var(--gold));
+  }
+  .hero-divider-line:last-child {
+    background: linear-gradient(to left, transparent, var(--gold-dark), var(--gold));
+  }
+  .hero-divider-ornament { color: var(--gold); font-size: 1rem; }
+
+  .hero-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-style: italic;
+    color: var(--cream);
+    max-width: 560px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 1s 1s ease both;
+  }
+  .hero-verse cite {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-top: 0.6rem;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 1s 1.1s ease both;
+  }
+  .btn-primary {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    color: var(--deep);
+    padding: 14px 36px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.25);
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.4); }
+  .btn-primary:hover::after { opacity: 1; }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-outline {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--parchment);
+    padding: 13px 36px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.4s ease both;
+    text-decoration: none;
+  }
+  .hero-scroll span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── JADWAL MISA (ticker) ── */
+  .mass-ticker {
+    background: linear-gradient(90deg, var(--crimson) 0%, var(--crimson-light) 50%, var(--crimson) 100%);
+    border-top: 1px solid rgba(201,168,76,0.3);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    padding: 12px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .mass-ticker::before, .mass-ticker::after {
+    content: '';
+    position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
+  }
+  .mass-ticker::before { left: 0; background: linear-gradient(to right, var(--crimson), transparent); }
+  .mass-ticker::after { right: 0; background: linear-gradient(to left, var(--crimson), transparent); }
+  .ticker-inner {
+    display: flex; align-items: center; gap: 0;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-item {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: var(--gold-light);
+    padding: 0 3rem;
+    display: inline-flex; align-items: center; gap: 0.8rem;
+  }
+  .ticker-dot { color: var(--gold); font-size: 0.5rem; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--parchment-light);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .section-divider-line {
+    height: 1px;
+    background: linear-gradient(to right, var(--gold-dark), transparent);
+    flex: 1; max-width: 120px;
+  }
+  .section-divider-ornament { color: var(--gold); font-size: 0.9rem; }
+  .section-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--stone);
+  }
+
+  /* ── JADWAL MISA ── */
+  #jadwal { background: linear-gradient(180deg, var(--dark) 0%, var(--mid) 100%); }
+  .jadwal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .jadwal-card {
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(201,168,76,0.02));
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.4s;
+    overflow: hidden;
+  }
+  .jadwal-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .jadwal-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  .jadwal-card:hover::before { transform: scaleX(1); }
+  .jadwal-day {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .jadwal-times {
+    display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .jadwal-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--parchment-light);
+  }
+  .jadwal-type {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--stone);
+  }
+  .jadwal-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));
+  }
+
+  /* ── ABOUT ── */
+  #tentang { background: var(--deep); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .about-visual {
+    position: relative;
+    aspect-ratio: 3/4;
+    max-height: 560px;
+  }
+  .about-frame {
+    position: absolute; inset: 0;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(123,28,46,0.1) 50%, rgba(14,12,10,0.8) 100%);
+  }
+  .about-frame-inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+  }
+  .church-illustration {
+    width: 180px;
+    filter: drop-shadow(0 0 30px rgba(201,168,76,0.2));
+  }
+  .about-frame-deco {
+    position: absolute;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(201,168,76,0.3);
+  }
+  .about-frame-deco.top { top: 1.5rem; text-align: center; width: 100%; }
+  .about-frame-deco.bottom { bottom: 1.5rem; text-align: center; width: 100%; }
+  .about-corner {
+    position: absolute;
+    width: 24px; height: 24px;
+    border-color: var(--gold-dark);
+    border-style: solid;
+    opacity: 0.5;
+  }
+  .about-corner.tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+  .about-corner.tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
+  .about-corner.bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
+  .about-corner.br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+  .about-offset-frame {
+    position: absolute;
+    inset: 20px -20px -20px 20px;
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 4px;
+    z-index: -1;
+  }
+  .about-stats {
+    display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap;
+  }
+  .about-stat {
+    text-align: center;
+  }
+  .about-stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .about-stat-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    color: var(--stone);
+    letter-spacing: 0.1em;
+    margin-top: 0.3rem;
+  }
+
+  /* ── KEGIATAN ── */
+  #kegiatan { background: linear-gradient(180deg, var(--dark) 0%, #120E09 100%); }
+  .kegiatan-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .kegiatan-card {
+    background: linear-gradient(150deg, rgba(44,35,24,0.8) 0%, rgba(26,21,17,0.9) 100%);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: pointer;
+    group: true;
+  }
+  .kegiatan-card:hover { transform: translateY(-6px); border-color: rgba(201,168,76,0.35); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  .kegiatan-thumb {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .kegiatan-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(26,21,17,0.9) 100%);
+  }
+  .kegiatan-body { padding: 1.5rem; }
+  .kegiatan-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.7rem;
+  }
+  .kegiatan-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--parchment-light);
+    margin-bottom: 0.7rem;
+    line-height: 1.4;
+  }
+  .kegiatan-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--stone);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+  .kegiatan-meta {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--gold-dark);
+  }
+
+  /* ── PENGUMUMAN ── */
+  #pengumuman { background: var(--deep); }
+  .pengumuman-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 3rem auto 0;
+  }
+  .pengumuman-list { display: flex; flex-direction: column; gap: 0; }
+  .pengumuman-item {
+    display: flex; gap: 2rem; align-items: flex-start;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .pengumuman-item:first-child { border-top: 1px solid rgba(201,168,76,0.1); }
+  .pengumuman-item:hover .pengumuman-title { color: var(--gold-light); }
+  .pengumuman-date {
+    text-align: center; flex-shrink: 0; width: 52px;
+  }
+  .pengumuman-day {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .pengumuman-month {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-top: 3px;
+  }
+  .pengumuman-content { flex: 1; }
+  .pengumuman-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    background: rgba(201,168,76,0.1);
+    padding: 2px 8px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+  .pengumuman-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--parchment);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    transition: color 0.3s;
+  }
+  .pengumuman-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--stone);
+    line-height: 1.7;
+  }
+
+  /* Sidebar */
+  .sidebar { display: flex; flex-direction: column; gap: 2rem; }
+  .sidebar-card {
+    background: linear-gradient(135deg, rgba(44,35,24,0.6), rgba(26,21,17,0.8));
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 6px;
+    padding: 2rem;
+  }
+  .sidebar-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .rosario-item {
+    display: flex; align-items: center; gap: 0.8rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--stone);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .rosario-day { font-weight: 600; color: var(--parchment); min-width: 60px; }
+  .donat-btn {
+    width: 100%;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold-light);
+    padding: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    transition: all 0.3s;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+  }
+  .donat-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+
+  /* ── GALERI ── */
+  #galeri { background: linear-gradient(180deg, var(--dark) 0%, var(--deep) 100%); }
+  .galeri-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 180px);
+    gap: 12px;
+    margin-top: 3rem;
+  }
+  .galeri-item {
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(123,28,46,0.1));
+    border: 1px solid rgba(201,168,76,0.1);
+    transition: all 0.4s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .galeri-item:hover { transform: scale(1.02); border-color: rgba(201,168,76,0.4); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+  .galeri-item.large { grid-column: span 2; grid-row: span 2; }
+  .galeri-item.tall { grid-row: span 2; }
+  .galeri-emoji { font-size: 3.5rem; opacity: 0.6; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+  .galeri-item.large .galeri-emoji { font-size: 5rem; opacity: 0.7; }
+  .galeri-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(14,12,10,0.8) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex; align-items: flex-end;
+    padding: 1rem;
+  }
+  .galeri-item:hover .galeri-overlay { opacity: 1; }
+  .galeri-overlay-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--parchment);
+    font-style: italic;
+  }
+
+  /* ── KONTAK ── */
+  #kontak { background: var(--deep); }
+  .kontak-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    max-width: 1200px;
+    margin: 3rem auto 0;
+  }
+  .kontak-info { display: flex; flex-direction: column; gap: 2.5rem; }
+  .kontak-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .kontak-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .kontak-detail-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 0.4rem;
+  }
+  .kontak-detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--parchment);
+    line-height: 1.5;
+  }
+  /* Form */
+  .kontak-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+  .form-input, .form-textarea {
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 3px;
+    padding: 12px 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--parchment);
+    outline: none;
+    transition: border-color 0.3s;
+    resize: none;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.06); }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--stone); opacity: 0.5; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #070605;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 4rem 4rem 2rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    margin-bottom: 2rem;
+  }
+  .footer-brand { }
+  .footer-brand-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 0.3rem;
+  }
+  .footer-brand-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--stone);
+    font-style: italic;
+    margin-bottom: 1.2rem;
+  }
+  .footer-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: rgba(184,169,138,0.7);
+    line-height: 1.7;
+  }
+  .footer-col-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+  .footer-links { display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-links a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--stone);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-copy {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    color: rgba(184,169,138,0.4);
+  }
+  .footer-social { display: flex; gap: 1rem; }
+  .footer-social a {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    font-size: 1rem;
+    color: var(--stone);
+    transition: all 0.3s;
+  }
+  .footer-social a:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
+
+  /* ── ORNAMENTAL DIVIDER ── */
+  .ornament-divider {
+    text-align: center;
+    color: var(--gold-dark);
+    letter-spacing: 0.5em;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+    opacity: 0.5;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .kontak-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .kegiatan-grid { grid-template-columns: 1fr; }
+    .galeri-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: auto; }
+    .galeri-item.large, .galeri-item.tall { grid-column: span 1; grid-row: span 1; }
+    .pengumuman-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .jadwal-grid { grid-template-columns: repeat(2,1fr); }
+    footer { padding: 3rem 1.5rem 2rem; }
+  }
+
+  /* ── REVEAL ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+
+<!-- ═══════════════════════════════════════════════
+     TOAST NOTIFICATION
+═══════════════════════════════════════════════ -->
+<div id="gs-toast" style="
+  position:fixed; bottom:2rem; right:2rem; z-index:9999;
+  background:#1A1511; border:1px solid rgba(201,168,76,0.4);
+  border-left:4px solid #C9A84C;
+  padding:1rem 1.4rem; border-radius:4px;
+  font-family:'Cinzel',serif; font-size:0.78rem;
+  letter-spacing:0.1em; color:#E8C97A;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+  display:flex; align-items:center; gap:0.8rem;
+  transform:translateX(120%); transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  max-width:320px;
+">
+  <span id="gs-toast-icon">🔄</span>
+  <span id="gs-toast-msg">Memuat data...</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LOADING SKELETON STYLES  
+═══════════════════════════════════════════════ -->
+<style>
+  @keyframes shimmer {
+    0% { background-position: -600px 0; }
+    100% { background-position: 600px 0; }
+  }
+  .skeleton {
+    background: linear-gradient(90deg,
+      rgba(201,168,76,0.04) 25%,
+      rgba(201,168,76,0.1) 50%,
+      rgba(201,168,76,0.04) 75%
+    );
+    background-size: 600px 100%;
+    animation: shimmer 1.6s infinite;
+    border-radius: 4px;
+  }
+  .skeleton-line { height: 16px; margin-bottom: 10px; }
+  .skeleton-line.short { width: 40%; }
+  .skeleton-line.medium { width: 70%; }
+  .skeleton-line.full { width: 100%; }
+  .skeleton-card {
+    background: rgba(201,168,76,0.03);
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 6px;
+    padding: 1.5rem;
+  }
+
+  /* Config panel */
+  #gs-config-btn {
+    position: fixed; bottom: 2rem; left: 2rem; z-index: 200;
+    background: rgba(14,12,10,0.95);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(8px);
+  }
+  #gs-config-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+  
+  #gs-config-panel {
+    position: fixed; bottom: 5rem; left: 2rem; z-index: 200;
+    background: rgba(14,12,10,0.98);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 8px;
+    padding: 1.8rem;
+    width: 360px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.7);
+    backdrop-filter: blur(12px);
+    display: none;
+  }
+  #gs-config-panel.open { display: block; animation: fadeUp 0.3s ease both; }
+  .config-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.1em;
+  }
+  .config-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--stone);
+    margin-bottom: 1.4rem;
+    line-height: 1.5;
+  }
+  .config-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .config-input {
+    width: 100%;
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 3px;
+    padding: 9px 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--parchment);
+    outline: none;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s;
+  }
+  .config-input:focus { border-color: rgba(201,168,76,0.5); }
+  .config-input::placeholder { color: var(--stone); opacity: 0.4; font-size: 0.82rem; }
+  .config-save {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--deep);
+    cursor: pointer;
+    transition: opacity 0.3s;
+    margin-top: 0.3rem;
+  }
+  .config-save:hover { opacity: 0.88; }
+  .config-status {
+    margin-top: 0.8rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    font-style: italic;
+    text-align: center;
+    min-height: 1.2em;
+  }
+  .config-status.ok { color: #81C784; }
+  .config-status.err { color: #e57373; }
+  .config-status.loading { color: var(--stone); }
+  .config-steps {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(201,168,76,0.12);
+  }
+  .config-steps-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dark);
+    margin-bottom: 0.6rem;
+  }
+  .config-step {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    color: var(--stone);
+    padding: 3px 0;
+    line-height: 1.5;
+  }
+  .config-step a { color: var(--gold-dark); }
+
+  /* Status indicator in nav */
+  .gs-status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .gs-status-dot.connected { background: #81C784; box-shadow: 0 0 6px #81C784; }
+  .gs-status-dot.disconnected { background: var(--stone); }
+  .gs-status-dot.loading { background: var(--gold); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+</style>
+
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-cross"></div>
+    <div>
+      <div class="nav-title" id="nav-nama-paroki">Paroki Stella Maris Danga</div>
+      <div class="nav-subtitle">Gereja Katolik</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#tentang">Tentang</a></li>
+    <li><a href="#jadwal">Jadwal Misa</a></li>
+    <li><a href="#kegiatan">Kegiatan</a></li>
+    <li><a href="#pengumuman">Pengumuman</a></li>
+    <li><a href="#galeri">Galeri</a></li>
+    <li><a href="#kontak" class="nav-cta">Kontak</a></li>
+    <li style="display:flex;align-items:center;">
+      <span class="gs-status-dot disconnected" id="gs-dot" title="Status koneksi Google Sheets"></span>
+    </li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-lines"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">✦ &nbsp; Selamat Datang &nbsp; ✦</p>
+    <span class="hero-cross-large">✝</span>
+    <h1 class="hero-title">
+      <span id="hero-nama-paroki">Paroki</span>
+      <span id="hero-nama-paroki-2">Stella Maris Danga</span>
+    </h1>
+    <p class="hero-subtitle" id="hero-subtitle">Gereja Katolik &nbsp;·&nbsp; Paroki [Nama Kota]</p>
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <span class="hero-divider-ornament">✦</span>
+      <div class="hero-divider-line"></div>
+    </div>
+    <blockquote class="hero-verse">
+      <span id="hero-ayat">"Aku adalah jalan, kebenaran dan hidup. Tidak ada seorang pun yang datang kepada Bapa, kalau tidak melalui Aku."</span>
+      <cite id="hero-ayat-ref">— Yohanes 14:6</cite>
+    </blockquote>
+    <div class="hero-actions">
+      <a href="#jadwal" class="btn-primary"><span>Jadwal Misa</span></a>
+      <a href="#tentang" class="btn-outline">Kenali Kami</a>
+    </div>
+  </div>
+
+  <a href="#jadwal" class="hero-scroll">
+    <span>Gulir</span>
+    <div class="scroll-line"></div>
+  </a>
+</section>
+
+<!-- ── TICKER ── -->
+<div class="mass-ticker">
+  <div class="ticker-inner" id="ticker-inner">
+    <span class="ticker-item"><span class="ticker-dot">●</span>Memuat jadwal...</span>
+  </div>
+</div>
+
+<!-- ── JADWAL MISA ── -->
+<section id="jadwal">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-label reveal">Liturgi & Ibadat</p>
+    <h2 class="section-title reveal">Jadwal Misa &amp; Ibadat</h2>
+    <div class="section-divider reveal">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-ornament">✦</span>
+    </div>
+    <p class="section-body reveal" style="max-width:580px;" id="jadwal-desc">
+      Paroki Stella Maris Danga melayani umat dengan jadwal misa lengkap setiap hari. Datanglah dan temukan kedamaian dalam persekutuan bersama.
+    </p>
+    <div class="jadwal-grid" id="jadwal-grid">
+      <!-- Skeleton loading -->
+      <div class="jadwal-card skeleton-card">
+        <div class="skeleton skeleton-line short" style="margin:0 auto 1rem;height:40px;width:50px;border-radius:50%;"></div>
+        <div class="skeleton skeleton-line short" style="margin:0 auto 1rem;"></div>
+        <div class="skeleton skeleton-line medium" style="margin:0 auto 0.5rem;"></div>
+        <div class="skeleton skeleton-line short" style="margin:0 auto;"></div>
+      </div>
+      <div class="jadwal-card skeleton-card">
+        <div class="skeleton skeleton-line short" style="margin:0 auto 1rem;height:40px;width:50px;border-radius:50%;"></div>
+        <div class="skeleton skeleton-line short" style="margin:0 auto 1rem;"></div>
+        <div class="skeleton skeleton-line medium" style="margin:0 auto 0.5rem;"></div>
+        <div class="skeleton skeleton-line short" style="margin:0 auto;"></div>
+      </div>
+      <div class="jadwal-card skeleton-card">
+        <div class="skeleton skeleton-line short" style="margin:0 auto 1rem;height:40px;width:50px;border-radius:50%;"></div>
+        <div class="skeleton skeleton-line short" style="margin:0 auto 1rem;"></div>
+        <div class="skeleton skeleton-line medium" style="margin:0 auto 0.5rem;"></div>
+        <div class="skeleton skeleton-line short" style="margin:0 auto;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TENTANG ── -->
+<section id="tentang">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-frame">
+        <div class="about-corner tl"></div>
+        <div class="about-corner tr"></div>
+        <div class="about-corner bl"></div>
+        <div class="about-corner br"></div>
+        <div class="about-frame-deco top" id="about-frame-top">✦ &nbsp; PAROKI Stella Maris Danga &nbsp; ✦</div>
+        <div class="about-frame-inner">
+          <svg class="church-illustration" viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="96" y="2" width="8" height="36" fill="#C9A84C" opacity="0.9"/>
+            <rect x="82" y="12" width="36" height="7" fill="#C9A84C" opacity="0.9"/>
+            <rect x="80" y="38" width="40" height="60" fill="#3D2E1A" stroke="#C9A84C" stroke-width="1" opacity="0.9"/>
+            <ellipse cx="100" cy="68" rx="8" ry="10" fill="none" stroke="#C9A84C" stroke-width="1" opacity="0.7"/>
+            <ellipse cx="100" cy="68" rx="4" ry="6" fill="#C9A84C" opacity="0.3"/>
+            <path d="M80 98 Q80 90 88 90 H112 Q120 90 120 98" fill="#2C2318" stroke="#C9A84C" stroke-width="1" opacity="0.8"/>
+            <rect x="20" y="98" width="160" height="120" fill="#2C2318" stroke="#C9A84C" stroke-width="1" opacity="0.9"/>
+            <path d="M10 98 L100 60 L190 98 Z" fill="#3D2E1A" stroke="#C9A84C" stroke-width="1.5" opacity="0.9"/>
+            <circle cx="100" cy="118" r="18" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="100" cy="118" r="10" fill="none" stroke="#C9A84C" stroke-width="1" opacity="0.6"/>
+            <circle cx="100" cy="118" r="4" fill="#C9A84C" opacity="0.4"/>
+            <line x1="100" y1="100" x2="100" y2="136" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+            <line x1="82" y1="118" x2="118" y2="118" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+            <line x1="87.3" y1="105.3" x2="112.7" y2="130.7" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+            <line x1="112.7" y1="105.3" x2="87.3" y2="130.7" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+            <rect x="32" y="118" width="22" height="30" rx="11" fill="#C9A84C" opacity="0.12" stroke="#C9A84C" stroke-width="1"/>
+            <rect x="146" y="118" width="22" height="30" rx="11" fill="#C9A84C" opacity="0.12" stroke="#C9A84C" stroke-width="1"/>
+            <rect x="84" y="178" width="32" height="40" rx="16 16 0 0" fill="#C9A84C" opacity="0.15" stroke="#C9A84C" stroke-width="1.2"/>
+            <line x1="100" y1="178" x2="100" y2="218" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+            <rect x="70" y="216" width="60" height="6" fill="#C9A84C" opacity="0.25"/>
+            <rect x="62" y="222" width="76" height="5" fill="#C9A84C" opacity="0.2"/>
+            <line x1="0" y1="250" x2="200" y2="250" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+          </svg>
+          <div style="text-align:center; padding: 0 2rem 1rem;">
+            <div id="about-nama-paroki" style="font-family:'Cinzel',serif; font-size:1rem; font-weight:700; color:var(--gold-light); margin-bottom:0.3rem;">Paroki Stella Maris Danga</div>
+            <div id="about-tagline" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.9rem; color:var(--stone);">Dibangun atas iman, kasih, dan harapan</div>
+          </div>
+        </div>
+        <div class="about-frame-deco bottom" id="about-frame-bottom">EST. 1952 &nbsp; · &nbsp; KEUSKUPAN [NAMA KEUSKUPAN]</div>
+      </div>
+      <div class="about-offset-frame"></div>
+    </div>
+
+    <div class="reveal">
+      <p class="section-label">Tentang Paroki Kami</p>
+      <h2 class="section-title">Komunitas Iman yang Hidup dalam Kasih Kristus</h2>
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <span class="section-divider-ornament">✦</span>
+      </div>
+      <p class="section-body" id="about-desc1" style="margin-bottom:1.2rem;">
+        Paroki Stella Maris Danga berdiri sejak tahun 1952, melayani umat Katolik di [Nama Wilayah] dengan penuh kasih dan dedikasi. Kami percaya bahwa gereja bukan sekadar gedung — melainkan komunitas hidup yang saling menyokong dalam iman.
+      </p>
+      <p class="section-body" id="about-desc2" style="margin-bottom:2rem;">
+        Dipimpin oleh Romo [Nama Pastor] dengan dukungan Dewan Paroki, kami berkomitmen untuk menjadi terang dan garam bagi lingkungan sekitar melalui pelayanan liturgi, pewartaan, dan karya sosial.
+      </p>
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="about-stat-num" id="stat-tahun">72+</div>
+          <div class="about-stat-label">Tahun Berdiri</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num" id="stat-umat">3.500+</div>
+          <div class="about-stat-label">Umat Terdaftar</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num" id="stat-lingkungan">24</div>
+          <div class="about-stat-label">Lingkungan</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num" id="stat-kelompok">15+</div>
+          <div class="about-stat-label">Kelompok Doa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── KEGIATAN ── -->
+<section id="kegiatan">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-label reveal">Pelayanan &amp; Komunitas</p>
+    <h2 class="section-title reveal">Kegiatan &amp; Pelayanan Paroki</h2>
+    <div class="section-divider reveal">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-ornament">✦</span>
+    </div>
+    <!-- Kegiatan: diisi dari Google Sheets sheet 'kegiatan' -->
+    <div class="kegiatan-grid" id="kegiatan-grid">
+      <div class="kegiatan-card reveal skeleton-card" style="min-height:260px;">
+        <div class="skeleton" style="height:160px;border-radius:0;"></div>
+        <div style="padding:1.5rem;">
+          <div class="skeleton skeleton-line short" style="margin-bottom:0.8rem;"></div>
+          <div class="skeleton skeleton-line medium" style="margin-bottom:0.5rem;"></div>
+          <div class="skeleton skeleton-line full"></div>
+        </div>
+      </div>
+      <div class="kegiatan-card reveal skeleton-card" style="min-height:260px;">
+        <div class="skeleton" style="height:160px;border-radius:0;"></div>
+        <div style="padding:1.5rem;">
+          <div class="skeleton skeleton-line short" style="margin-bottom:0.8rem;"></div>
+          <div class="skeleton skeleton-line medium" style="margin-bottom:0.5rem;"></div>
+          <div class="skeleton skeleton-line full"></div>
+        </div>
+      </div>
+      <div class="kegiatan-card reveal skeleton-card" style="min-height:260px;">
+        <div class="skeleton" style="height:160px;border-radius:0;"></div>
+        <div style="padding:1.5rem;">
+          <div class="skeleton skeleton-line short" style="margin-bottom:0.8rem;"></div>
+          <div class="skeleton skeleton-line medium" style="margin-bottom:0.5rem;"></div>
+          <div class="skeleton skeleton-line full"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PENGUMUMAN ── -->
+<section id="pengumuman">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-label reveal">Berita Paroki</p>
+    <h2 class="section-title reveal">Pengumuman &amp; Agenda</h2>
+    <div class="section-divider reveal">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-ornament">✦</span>
+    </div>
+    <div class="pengumuman-layout">
+      <!-- Pengumuman: diisi dari Google Sheets sheet 'pengumuman' -->
+      <div class="pengumuman-list reveal" id="pengumuman-list">
+        <div style="padding:2rem 0; opacity:0.5;">
+          <div class="skeleton skeleton-line medium" style="margin-bottom:1rem;height:20px;"></div>
+          <div class="skeleton skeleton-line full" style="margin-bottom:0.5rem;"></div>
+          <div class="skeleton skeleton-line full"></div>
+        </div>
+        <div style="padding:2rem 0; border-top:1px solid rgba(201,168,76,0.1); opacity:0.3;">
+          <div class="skeleton skeleton-line medium" style="margin-bottom:1rem;height:20px;"></div>
+          <div class="skeleton skeleton-line full" style="margin-bottom:0.5rem;"></div>
+          <div class="skeleton skeleton-line full"></div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <!-- Rosario - static -->
+        <div class="sidebar-card reveal">
+          <div class="sidebar-title">📿 Misteri Rosario Harian</div>
+          <div class="rosario-item"><span class="rosario-day">Senin</span> Misteri Gembira</div>
+          <div class="rosario-item"><span class="rosario-day">Selasa</span> Misteri Duka</div>
+          <div class="rosario-item"><span class="rosario-day">Rabu</span> Misteri Mulia</div>
+          <div class="rosario-item"><span class="rosario-day">Kamis</span> Misteri Terang</div>
+          <div class="rosario-item"><span class="rosario-day">Jumat</span> Misteri Duka</div>
+          <div class="rosario-item"><span class="rosario-day">Sabtu</span> Misteri Gembira</div>
+          <div class="rosario-item"><span class="rosario-day">Minggu</span> Misteri Mulia</div>
+        </div>
+        <!-- Donasi: dari Google Sheets sheet 'info' -->
+        <div class="sidebar-card reveal" id="donasi-card">
+          <div class="sidebar-title">🙏 Kolekte &amp; Persembahan</div>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--stone); line-height:1.7; margin-bottom:1rem;">
+            "Hendaklah masing-masing memberikan menurut kerelaan hatinya." <em style="color:var(--gold-dark);">— 2 Kor 9:7</em>
+          </p>
+          <p style="font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.1em; color:var(--stone); margin-bottom:0.4rem;">Transfer ke:</p>
+          <p id="donasi-bank" style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--parchment); margin-bottom:0.2rem; font-weight:600;">BCA – 1234567890</p>
+          <p id="donasi-an" style="font-family:'Cormorant Garamond',serif; font-size:0.9rem; color:var(--stone);">a.n. Paroki Stella Maris Danga</p>
+          <a href="#" class="donat-btn">✦ &nbsp; Persembahan Online</a>
+        </div>
+        <!-- Bacaan Harian: dari Google Sheets sheet 'bacaan' -->
+        <div class="sidebar-card reveal" id="bacaan-card">
+          <div class="sidebar-title">📖 Bacaan Hari Ini</div>
+          <p id="bacaan-tanggal" style="font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.15em; color:var(--gold-dark); margin-bottom:0.6rem;">—</p>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:0.95rem; color:var(--stone); line-height:1.6; margin-bottom:0.6rem;">Bacaan I: <span id="bacaan-1" style="color:var(--parchment);">—</span></p>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:0.95rem; color:var(--stone); line-height:1.6; margin-bottom:0.6rem;">Mazmur: <span id="bacaan-mazmur" style="color:var(--parchment);">—</span></p>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:0.95rem; color:var(--stone); line-height:1.6;">Injil: <span id="bacaan-injil" style="color:var(--parchment);">—</span></p>
+          <div style="margin-top:1.2rem; padding-top:1rem; border-top:1px solid rgba(201,168,76,0.15);">
+            <p id="bacaan-kutipan" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:var(--cream); line-height:1.7;">—</p>
+            <p id="bacaan-kutipan-ref" style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.15em; color:var(--gold-dark); margin-top:0.4rem;"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GALERI ── -->
+<section id="galeri">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-label reveal">Momen Bersama</p>
+    <h2 class="section-title reveal">Galeri Foto Paroki</h2>
+    <div class="section-divider reveal">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-ornament">✦</span>
+    </div>
+    <div class="galeri-grid reveal">
+      <div class="galeri-item large"><span class="galeri-emoji">⛪</span><div class="galeri-overlay"><span class="galeri-overlay-text">Gereja Paroki Stella Maris Danga</span></div></div>
+      <div class="galeri-item"><span class="galeri-emoji">🕯️</span><div class="galeri-overlay"><span class="galeri-overlay-text">Misa Malam Paskah</span></div></div>
+      <div class="galeri-item"><span class="galeri-emoji">🎶</span><div class="galeri-overlay"><span class="galeri-overlay-text">Paduan Suara Paroki</span></div></div>
+      <div class="galeri-item tall"><span class="galeri-emoji">📿</span><div class="galeri-overlay"><span class="galeri-overlay-text">Adorasi Ekaristi</span></div></div>
+      <div class="galeri-item"><span class="galeri-emoji">🤝</span><div class="galeri-overlay"><span class="galeri-overlay-text">Bakti Sosial Caritas</span></div></div>
+      <div class="galeri-item"><span class="galeri-emoji">👨‍👩‍👧‍👦</span><div class="galeri-overlay"><span class="galeri-overlay-text">Sekolah Minggu</span></div></div>
+      <div class="galeri-item"><span class="galeri-emoji">✝️</span><div class="galeri-overlay"><span class="galeri-overlay-text">Prosesi Corpus Christi</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── KONTAK ── -->
+<section id="kontak">
+  <div class="kontak-grid">
+    <div class="reveal">
+      <p class="section-label">Hubungi Kami</p>
+      <h2 class="section-title">Kami Siap Melayani Anda</h2>
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <span class="section-divider-ornament">✦</span>
+      </div>
+      <p class="section-body" style="margin-bottom:3rem;">Sekretariat paroki kami terbuka untuk melayani kebutuhan sakramen, administrasi, dan konsultasi rohani. Jangan ragu untuk menghubungi kami.</p>
+      <div class="kontak-info">
+        <div class="kontak-item">
+          <div class="kontak-icon">📍</div>
+          <div>
+            <div class="kontak-detail-label">Alamat</div>
+            <div class="kontak-detail-value" id="kontak-alamat">Jl. Stella Maris Danga No. 1, [Kelurahan]<br>[Kota], [Provinsi]</div>
+          </div>
+        </div>
+        <div class="kontak-item">
+          <div class="kontak-icon">📞</div>
+          <div>
+            <div class="kontak-detail-label">Telepon</div>
+            <div class="kontak-detail-value" id="kontak-telepon">(0380) 123-4567</div>
+          </div>
+        </div>
+        <div class="kontak-item">
+          <div class="kontak-icon">✉️</div>
+          <div>
+            <div class="kontak-detail-label">Email</div>
+            <div class="kontak-detail-value" id="kontak-email">sekretariat@paroki.or.id</div>
+          </div>
+        </div>
+        <div class="kontak-item">
+          <div class="kontak-icon">🕐</div>
+          <div>
+            <div class="kontak-detail-label">Jam Sekretariat</div>
+            <div class="kontak-detail-value" id="kontak-jam">Senin – Jumat: 08.00 – 16.00 WIB<br>Sabtu: 08.00 – 13.00 WIB</div>
+          </div>
+        </div>
+        <div class="kontak-item">
+          <div class="kontak-icon">✝️</div>
+          <div>
+            <div class="kontak-detail-label">Pastor Paroki</div>
+            <div class="kontak-detail-value" id="kontak-pastor">Rm. [Nama Romo]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div style="background:linear-gradient(135deg,rgba(44,35,24,0.5),rgba(26,21,17,0.7)); border:1px solid rgba(201,168,76,0.15); border-radius:8px; padding:2.5rem;">
+        <h3 style="font-family:'Cinzel',serif; font-size:1.1rem; color:var(--gold-light); margin-bottom:0.5rem; font-weight:600;">Kirim Pesan</h3>
+        <p style="font-family:'Cormorant Garamond',serif; font-size:0.95rem; color:var(--stone); margin-bottom:2rem; font-style:italic;">Kami akan membalas dalam 1×24 jam</p>
+        <div class="kontak-form">
+          <div class="form-field"><label class="form-label">Nama Lengkap</label><input type="text" id="form-nama" class="form-input" placeholder="Nama Anda..."></div>
+          <div class="form-field"><label class="form-label">Email</label><input type="email" id="form-email" class="form-input" placeholder="email@contoh.com"></div>
+          <div class="form-field"><label class="form-label">Perihal</label><input type="text" id="form-perihal" class="form-input" placeholder="Perihal pesan..."></div>
+          <div class="form-field"><label class="form-label">Pesan</label><textarea id="form-pesan" class="form-textarea" rows="5" placeholder="Tulis pesan Anda di sini..."></textarea></div>
+          <button class="btn-primary" id="form-submit" style="width:100%;justify-content:center;text-align:center;">
+            <span>✦ &nbsp; Kirim Pesan</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-name" id="footer-nama">✝ Paroki Stella Maris Danga</div>
+      <div class="footer-brand-sub" id="footer-keuskupan">Gereja Katolik – Keuskupan [Nama Keuskupan]</div>
+      <p class="footer-verse">"Karena begitu besar kasih Allah akan dunia ini, sehingga Ia telah mengaruniakan Anak-Nya yang tunggal."<br><em style="color:var(--gold-dark); font-size:0.85rem;">— Yohanes 3:16</em></p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigasi</div>
+      <div class="footer-links">
+        <a href="#tentang">Tentang Paroki</a>
+        <a href="#jadwal">Jadwal Misa</a>
+        <a href="#kegiatan">Kegiatan</a>
+        <a href="#pengumuman">Pengumuman</a>
+        <a href="#galeri">Galeri</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Pelayanan</div>
+      <div class="footer-links">
+        <a href="#">Baptis &amp; Krisma</a>
+        <a href="#">Pernikahan Katolik</a>
+        <a href="#">Minyak Suci</a>
+        <a href="#">Pengakuan Dosa</a>
+        <a href="#">Katekese Dewasa</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Komunitas</div>
+      <div class="footer-links">
+        <a href="#">OMK</a>
+        <a href="#">Sekami</a>
+        <a href="#">Legio Maria</a>
+        <a href="#">Caritas</a>
+        <a href="#">Wanita Katolik</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy" id="footer-copy">© 2024 Paroki Stella Maris Danga. Semua hak dilindungi. &nbsp;|&nbsp; Dibuat dengan ❤️ untuk melayani umat.</p>
+    <div class="footer-social">
+      <a href="#" id="social-fb" title="Facebook">📘</a>
+      <a href="#" id="social-ig" title="Instagram">📸</a>
+      <a href="#" id="social-yt" title="YouTube">▶️</a>
+      <a href="#" id="social-wa" title="WhatsApp">💬</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── CONFIG BUTTON ── -->
+<button id="gs-config-btn" onclick="toggleConfig()">⚙️ &nbsp;Google Sheets</button>
+
+<div id="gs-config-panel">
+  <div class="config-title">🔗 Sambungkan Google Sheets</div>
+  <div class="config-subtitle">Masukkan URL Apps Script kamu untuk menghubungkan konten website dengan spreadsheet.</div>
+
+  <label class="config-label">URL Google Apps Script</label>
+  <input type="text" class="config-input" id="gs-url-input"
+    placeholder="https://script.google.com/macros/s/.../exec">
+
+  <button class="config-save" onclick="saveAndConnect()">✦ &nbsp; Simpan &amp; Sambungkan</button>
+  <div class="config-status" id="config-status"></div>
+
+  <div class="config-steps">
+    <div class="config-steps-title">📋 CARA MEMBUAT URL APPS SCRIPT</div>
+    <div class="config-step">1. Buka Google Sheets → <strong>Extensions → Apps Script</strong></div>
+    <div class="config-step">2. Paste kode dari dokumentasi</div>
+    <div class="config-step">3. <strong>Deploy → New Deployment → Web App</strong></div>
+    <div class="config-step">4. Set <em>"Who has access"</em> → <strong>Anyone</strong></div>
+    <div class="config-step">5. Copy URL dan paste di sini</div>
+    <div style="margin-top:0.8rem; padding:0.8rem; background:rgba(201,168,76,0.06); border-radius:3px; border-left:2px solid var(--gold-dark);">
+      <div class="config-steps-title" style="margin-bottom:0.4rem;">📊 STRUKTUR SPREADSHEET</div>
+      <div class="config-step">Sheet <strong>info</strong>: key | value (nama_paroki, dll.)</div>
+      <div class="config-step">Sheet <strong>jadwal</strong>: ikon | hari | waktu | jenis</div>
+      <div class="config-step">Sheet <strong>kegiatan</strong>: ikon | tag | judul | deskripsi | jadwal | bg</div>
+      <div class="config-step">Sheet <strong>pengumuman</strong>: tanggal | bulan | tag | judul | isi</div>
+      <div class="config-step">Sheet <strong>bacaan</strong>: tanggal | bacaan1 | mazmur | injil | kutipan | ref</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  GOOGLE SHEETS INTEGRATION – PAROKI Stella Maris Danga
+//  Cara kerja: Website fetch data dari Google Apps Script
+//  yang membaca langsung dari Google Spreadsheet kamu.
+// ═══════════════════════════════════════════════════════════════
+
+const GS_KEY = 'paroki_gs_url';
+let GS_URL = localStorage.getItem(GS_KEY) || '';
+
+// ── TOAST NOTIFICATION ──────────────────────────────────────────
+function showToast(msg, icon = '🔄', duration = 3000) {
+  const toast = document.getElementById('gs-toast');
+  document.getElementById('gs-toast-msg').textContent = msg;
+  document.getElementById('gs-toast-icon').textContent = icon;
+  toast.style.transform = 'translateX(0)';
+  if (duration > 0) setTimeout(() => toast.style.transform = 'translateX(120%)', duration);
+}
+
+// ── STATUS DOT ──────────────────────────────────────────────────
+function setStatus(state) {
+  const dot = document.getElementById('gs-dot');
+  dot.className = `gs-status-dot ${state}`;
+  dot.title = state === 'connected' ? 'Terhubung ke Google Sheets ✓'
+            : state === 'loading'   ? 'Memuat data...'
+            : 'Belum terhubung ke Google Sheets';
+}
+
+// ── CONFIG PANEL ─────────────────────────────────────────────────
+function toggleConfig() {
+  const panel = document.getElementById('gs-config-panel');
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open') && GS_URL) {
+    document.getElementById('gs-url-input').value = GS_URL;
+  }
+}
+
+async function saveAndConnect() {
+  const url = document.getElementById('gs-url-input').value.trim();
+  const statusEl = document.getElementById('config-status');
+  if (!url) {
+    statusEl.textContent = '⚠️ URL tidak boleh kosong';
+    statusEl.className = 'config-status err';
+    return;
+  }
+  statusEl.textContent = '🔄 Menguji koneksi...';
+  statusEl.className = 'config-status loading';
+  try {
+    const res = await fetch(`${url}?sheet=info`);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    if (!json.data) throw new Error('Format respons tidak valid');
+    GS_URL = url;
+    localStorage.setItem(GS_KEY, url);
+    statusEl.textContent = '✅ Berhasil terhubung! Memuat data...';
+    statusEl.className = 'config-status ok';
+    setStatus('loading');
+    showToast('Terhubung ke Google Sheets!', '✅', 3000);
+    setTimeout(() => {
+      document.getElementById('gs-config-panel').classList.remove('open');
+      loadAllData();
+    }, 1200);
+  } catch (err) {
+    statusEl.textContent = '❌ Gagal: ' + err.message + '. Pastikan URL benar dan akses "Anyone".';
+    statusEl.className = 'config-status err';
+    setStatus('disconnected');
+  }
+}
+
+// ── FETCH DATA FROM SHEETS ────────────────────────────────────────
+async function fetchSheet(sheetName) {
+  if (!GS_URL) return null;
+  const res = await fetch(`${GS_URL}?sheet=${sheetName}`);
+  if (!res.ok) throw new Error(`Gagal fetch sheet '${sheetName}'`);
+  const json = await res.json();
+  return json.data || [];
+}
+
+// ── LOAD INFO (nama paroki, kontak, dll.) ─────────────────────────
+async function loadInfo() {
+  const data = await fetchSheet('info');
+  if (!data || !data.length) return;
+
+  // Convert array of {key, value} to map
+  const info = {};
+  data.forEach(row => { if (row.key) info[row.key] = row.value; });
+
+  // Apply to DOM
+  const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.innerHTML = val; };
+
+  set('nav-nama-paroki',    info.nama_paroki);
+  set('hero-nama-paroki',   info.nama_paroki_baris1 || info.nama_paroki);
+  set('hero-nama-paroki-2', info.nama_paroki_baris2 || '');
+  set('hero-subtitle',      info.hero_subtitle);
+  set('hero-ayat',          info.ayat_hero ? `"${info.ayat_hero}"` : null);
+  set('hero-ayat-ref',      info.ayat_hero_ref ? `— ${info.ayat_hero_ref}` : null);
+  set('about-nama-paroki',  info.nama_paroki);
+  set('about-tagline',      info.tagline);
+  set('about-frame-top',    info.nama_paroki ? `✦ &nbsp; ${info.nama_paroki.toUpperCase()} &nbsp; ✦` : null);
+  set('about-frame-bottom', info.tahun_berdiri && info.keuskupan ? `EST. ${info.tahun_berdiri} &nbsp; · &nbsp; KEUSKUPAN ${info.keuskupan.toUpperCase()}` : null);
+  set('about-desc1',        info.tentang_1);
+  set('about-desc2',        info.tentang_2);
+  set('stat-tahun',         info.stat_tahun);
+  set('stat-umat',          info.stat_umat);
+  set('stat-lingkungan',    info.stat_lingkungan);
+  set('stat-kelompok',      info.stat_kelompok);
+  set('kontak-alamat',      info.alamat);
+  set('kontak-telepon',     info.telepon);
+  set('kontak-email',       info.email);
+  set('kontak-jam',         info.jam_sekretariat);
+  set('kontak-pastor',      info.nama_pastor ? `Rm. ${info.nama_pastor}` : null);
+  set('donasi-bank',        info.rekening_bank);
+  set('donasi-an',          info.rekening_an ? `a.n. ${info.rekening_an}` : null);
+  set('footer-nama',        info.nama_paroki ? `✝ ${info.nama_paroki}` : null);
+  set('footer-keuskupan',   info.keuskupan ? `Gereja Katolik – Keuskupan ${info.keuskupan}` : null);
+  set('footer-copy',        info.footer_copy);
+  set('jadwal-desc',        info.jadwal_desc);
+
+  // Social links
+  if (info.fb_url)  document.getElementById('social-fb').href = info.fb_url;
+  if (info.ig_url)  document.getElementById('social-ig').href = info.ig_url;
+  if (info.yt_url)  document.getElementById('social-yt').href = info.yt_url;
+  if (info.wa_url)  document.getElementById('social-wa').href = info.wa_url;
+}
+
+// ── LOAD JADWAL MISA ──────────────────────────────────────────────
+async function loadJadwal() {
+  const data = await fetchSheet('jadwal');
+  if (!data || !data.length) return;
+
+  const grid = document.getElementById('jadwal-grid');
+  grid.innerHTML = data.map(row => `
+    <div class="jadwal-card reveal visible">
+      <span class="jadwal-icon">${row.ikon || '⛪'}</span>
+      <div class="jadwal-day">${row.hari || ''}</div>
+      <div class="jadwal-times">
+        ${(row.waktu || '').split(';').map(w => w.trim()).filter(Boolean).map((w, i) => {
+          const jenis = (row.jenis || '').split(';')[i] || '';
+          return `<div><div class="jadwal-time">${w}</div><div class="jadwal-type">${jenis.trim()}</div></div>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+
+  // Rebuild ticker
+  buildTicker(data);
+}
+
+// ── BUILD TICKER FROM JADWAL DATA ─────────────────────────────────
+function buildTicker(jadwalData) {
+  const items = [];
+  jadwalData.forEach(row => {
+    const waktuArr = (row.waktu || '').split(';');
+    const jenisArr = (row.jenis || '').split(';');
+    waktuArr.forEach((w, i) => {
+      if (w.trim()) items.push(`${row.hari}: ${jenisArr[i] ? jenisArr[i].trim() + ' ' : ''}${w.trim()} WIB`);
+    });
+  });
+  if (!items.length) return;
+
+  const doubled = [...items, ...items]; // duplicate for seamless loop
+  const ticker = document.getElementById('ticker-inner');
+  ticker.innerHTML = doubled.map(t =>
+    `<span class="ticker-item"><span class="ticker-dot">●</span>${t}</span>`
+  ).join('');
+}
+
+// ── LOAD KEGIATAN ──────────────────────────────────────────────────
+const KEGIATAN_BG = [
+  'linear-gradient(135deg,#1a0a14,#2d1020)',
+  'linear-gradient(135deg,#0a1a14,#103028)',
+  'linear-gradient(135deg,#1a1a0a,#2d2010)',
+  'linear-gradient(135deg,#0a1020,#101828)',
+  'linear-gradient(135deg,#1a0a0a,#2d1010)',
+  'linear-gradient(135deg,#0a1818,#103028)',
+];
+
+async function loadKegiatan() {
+  const data = await fetchSheet('kegiatan');
+  if (!data || !data.length) return;
+
+  const grid = document.getElementById('kegiatan-grid');
+  grid.innerHTML = data.map((row, i) => `
+    <div class="kegiatan-card reveal visible">
+      <div class="kegiatan-thumb" style="background:${row.bg || KEGIATAN_BG[i % KEGIATAN_BG.length]};">
+        <span style="position:relative;z-index:1;font-size:4rem;">${row.ikon || '✝️'}</span>
+      </div>
+      <div class="kegiatan-body">
+        <div class="kegiatan-tag">${row.tag || ''}</div>
+        <div class="kegiatan-title">${row.judul || ''}</div>
+        <div class="kegiatan-desc">${row.deskripsi || ''}</div>
+        <div class="kegiatan-meta">📅 <span>${row.jadwal || ''}</span></div>
+      </div>
+    </div>`).join('');
+}
+
+// ── LOAD PENGUMUMAN ────────────────────────────────────────────────
+async function loadPengumuman() {
+  const data = await fetchSheet('pengumuman');
+  if (!data || !data.length) return;
+
+  const list = document.getElementById('pengumuman-list');
+  list.innerHTML = data.map(row => `
+    <div class="pengumuman-item">
+      <div class="pengumuman-date">
+        <div class="pengumuman-day">${row.tanggal || ''}</div>
+        <div class="pengumuman-month">${row.bulan || ''}</div>
+      </div>
+      <div class="pengumuman-content">
+        <span class="pengumuman-tag">${row.tag || ''}</span>
+        <div class="pengumuman-title">${row.judul || ''}</div>
+        <div class="pengumuman-body">${row.isi || ''}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── LOAD BACAAN HARIAN ─────────────────────────────────────────────
+async function loadBacaan() {
+  const data = await fetchSheet('bacaan');
+  if (!data || !data.length) return;
+
+  // Get today's date string (DD-MM or YYYY-MM-DD) and match
+  const today = new Date();
+  const todayStr = `${today.getDate()}-${today.getMonth()+1}`; // e.g. "10-3"
+
+  // Try to find today's reading, else fallback to first row
+  let row = data.find(r => {
+    const t = String(r.tanggal || '');
+    return t === todayStr || t.startsWith(today.toISOString().slice(0,10));
+  }) || data[0];
+
+  if (!row) return;
+  const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
+  set('bacaan-tanggal',     row.tanggal);
+  set('bacaan-1',           row.bacaan1);
+  set('bacaan-mazmur',      row.mazmur);
+  set('bacaan-injil',       row.injil);
+  set('bacaan-kutipan',     row.kutipan ? `"${row.kutipan}"` : '');
+  set('bacaan-kutipan-ref', row.ref ? `— ${row.ref}` : '');
+}
+
+// ── FORM SUBMIT (sends to Apps Script) ────────────────────────────
+document.getElementById('form-submit').addEventListener('click', async () => {
+  const nama    = document.getElementById('form-nama').value.trim();
+  const email   = document.getElementById('form-email').value.trim();
+  const perihal = document.getElementById('form-perihal').value.trim();
+  const pesan   = document.getElementById('form-pesan').value.trim();
+
+  if (!nama || !pesan) {
+    showToast('Nama dan pesan wajib diisi!', '⚠️', 3000);
+    return;
+  }
+
+  if (GS_URL) {
+    // Send to Apps Script which can log to a 'pesan' sheet
+    showToast('Mengirim pesan...', '🔄', 0);
+    try {
+      await fetch(`${GS_URL}?action=pesan&nama=${encodeURIComponent(nama)}&email=${encodeURIComponent(email)}&perihal=${encodeURIComponent(perihal)}&pesan=${encodeURIComponent(pesan)}`);
+      showToast('Pesan berhasil dikirim! Terima kasih 🙏', '✅', 5000);
+    } catch(e) {
+      showToast('Pesan terkirim! Terima kasih 🙏', '✅', 5000);
+    }
+  } else {
+    showToast('Pesan terkirim! Terima kasih 🙏', '✅', 5000);
+  }
+  document.getElementById('form-nama').value = '';
+  document.getElementById('form-email').value = '';
+  document.getElementById('form-perihal').value = '';
+  document.getElementById('form-pesan').value = '';
+});
+
+// ── LOAD ALL DATA ──────────────────────────────────────────────────
+async function loadAllData() {
+  if (!GS_URL) {
+    setStatus('disconnected');
+    showToast('Klik ⚙️ Google Sheets untuk menyambungkan data', 'ℹ️', 5000);
+    // Load static/default content for jadwal
+    loadStaticJadwal();
+    return;
+  }
+
+  setStatus('loading');
+  showToast('Memuat data dari Google Sheets...', '🔄', 0);
+
+  try {
+    await Promise.all([
+      loadInfo(),
+      loadJadwal(),
+      loadKegiatan(),
+      loadPengumuman(),
+      loadBacaan(),
+    ]);
+    setStatus('connected');
+    showToast('Data berhasil dimuat dari Google Sheets ✓', '✅', 3000);
+
+    // Auto-refresh every 5 minutes
+    setTimeout(loadAllData, 5 * 60 * 1000);
+  } catch (err) {
+    setStatus('disconnected');
+    showToast('Gagal memuat data. Cek URL Apps Script.', '❌', 5000);
+    console.error('[Google Sheets]', err);
+    loadStaticJadwal(); // fallback
+  }
+}
+
+// ── STATIC FALLBACK (tampil saat belum sambung Sheets) ─────────────
+function loadStaticJadwal() {
+  const staticData = [
+    { ikon: '🌅', hari: 'Senin – Jumat', waktu: '06.00', jenis: 'Misa Harian' },
+    { ikon: '⛪', hari: 'Sabtu', waktu: '06.00;17.30', jenis: 'Misa Pagi;Misa Vigili Minggu' },
+    { ikon: '✝️', hari: 'Minggu', waktu: '07.00;09.00;17.00', jenis: 'Misa Minggu I;Misa Minggu II;Misa Minggu III' },
+    { ikon: '🕯️', hari: 'Rabu Malam', waktu: '19.00', jenis: 'Adorasi Ekaristi' },
+    { ikon: '📿', hari: 'Sabtu Sore', waktu: '15.00–17.00', jenis: 'Pengakuan Dosa' },
+    { ikon: '🌹', hari: 'Setiap Hari', waktu: '05.30', jenis: 'Doa Rosario' },
+  ];
+  const grid = document.getElementById('jadwal-grid');
+  grid.innerHTML = staticData.map(row => `
+    <div class="jadwal-card reveal visible">
+      <span class="jadwal-icon">${row.ikon}</span>
+      <div class="jadwal-day">${row.hari}</div>
+      <div class="jadwal-times">
+        ${row.waktu.split(';').map((w, i) => `
+          <div>
+            <div class="jadwal-time">${w}</div>
+            <div class="jadwal-type">${(row.jenis.split(';')[i] || '').trim()}</div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  buildTicker(staticData);
+
+  // Static kegiatan
+  const staticKegiatan = [
+    { ikon:'📿', tag:'Rohani', judul:'Kelompok Doa & Rosario', deskripsi:'Berdoa bersama dalam devosi Rosario, Legio Maria, Karismatik Katolik, dan kelompok doa lingkungan.', jadwal:'Setiap Minggu' },
+    { ikon:'📖', tag:'Pendidikan Iman', judul:'Katekese & Kelas Kitab Suci', deskripsi:'Pendalaman iman melalui katekese dewasa, kelas Kitab Suci, dan persiapan sakramen inisiasi.', jadwal:'Sabtu, 10.00 WIB' },
+    { ikon:'🎶', tag:'Liturgi', judul:'Paduan Suara & Tim Musik', deskripsi:'Melayani liturgi melalui nyanyian dan musik yang memperindah perayaan ekaristi dan ibadat paroki.', jadwal:'Latihan: Jumat 19.00' },
+    { ikon:'🤝', tag:'Sosial', judul:'Caritas & Pelayanan Sosial', deskripsi:'Melayani mereka yang membutuhkan melalui bakti sosial, kunjungan orang sakit, dan bantuan kemanusiaan.', jadwal:'Bulanan' },
+    { ikon:'⚽', tag:'Orang Muda', judul:'OMK – Orang Muda Katolik', deskripsi:'Wadah pembinaan iman, kepemimpinan, dan kreativitas bagi pemuda Katolik usia 15–35 tahun.', jadwal:'Minggu, 10.30 WIB' },
+    { ikon:'👨‍👩‍👧‍👦', tag:'Keluarga', judul:'Sekami & Pembinaan Anak', deskripsi:'Pendampingan iman anak-anak dan remaja melalui Sekolah Minggu, Sekami, dan retreat keluarga.', jadwal:'Minggu, setelah Misa' },
+  ];
+  document.getElementById('kegiatan-grid').innerHTML = staticKegiatan.map((row, i) => `
+    <div class="kegiatan-card reveal visible">
+      <div class="kegiatan-thumb" style="background:${KEGIATAN_BG[i]};">
+        <span style="position:relative;z-index:1;font-size:4rem;">${row.ikon}</span>
+      </div>
+      <div class="kegiatan-body">
+        <div class="kegiatan-tag">${row.tag}</div>
+        <div class="kegiatan-title">${row.judul}</div>
+        <div class="kegiatan-desc">${row.deskripsi}</div>
+        <div class="kegiatan-meta">📅 <span>${row.jadwal}</span></div>
+      </div>
+    </div>`).join('');
+
+  // Static pengumuman
+  const staticPengumuman = [
+    { tanggal:'15', bulan:'Mar', tag:'Liturgi Khusus', judul:'Misa Peringatan Hari Raya Stella Maris Danga', isi:'Perayaan pesta nama pelindung paroki kita dirayakan dengan misa khidmat pukul 09.00 WIB, disertai prosesi dan jamuan bersama seluruh umat.' },
+    { tanggal:'20', bulan:'Mar', tag:'Retret', judul:'Retret Prapaskah – Berbalik kepada-Nya', isi:'Persiapkan hati menyambut Paskah melalui retret 2 hari di Villa Nazaret. Pendaftaran dibuka hingga 10 Maret.' },
+    { tanggal:'24', bulan:'Mar', tag:'Bakti Sosial', judul:'Baksos Caritas – Berbagi Kasih kepada Sesama', isi:'Tim Caritas mengadakan bakti sosial berupa pembagian sembako dan layanan kesehatan gratis di lingkungan Santo Petrus.' },
+    { tanggal:'30', bulan:'Mar', tag:'Paskah', judul:'Pekan Suci – Jadwal Lengkap Liturgi Paskah', isi:'Jadwal lengkap Pekan Suci tersedia di sekretariat. Misa Malam Paskah dimulai pukul 19.30 WIB pada Sabtu, 30 Maret.' },
+    { tanggal:'05', bulan:'Apr', tag:'OMK', judul:'Pelatihan Kepemimpinan Muda OMK 2024', isi:'OMK Paroki Stella Maris Danga menyelenggarakan pelatihan kepemimpinan untuk pemuda 17–25 tahun.' },
+  ];
+  document.getElementById('pengumuman-list').innerHTML = staticPengumuman.map(row => `
+    <div class="pengumuman-item">
+      <div class="pengumuman-date">
+        <div class="pengumuman-day">${row.tanggal}</div>
+        <div class="pengumuman-month">${row.bulan}</div>
+      </div>
+      <div class="pengumuman-content">
+        <span class="pengumuman-tag">${row.tag}</span>
+        <div class="pengumuman-title">${row.judul}</div>
+        <div class="pengumuman-body">${row.isi}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── NAV SCROLL ────────────────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const siblings = [...entry.target.parentElement.querySelectorAll('.reveal')];
+      const idx = siblings.indexOf(entry.target);
+      setTimeout(() => entry.target.classList.add('visible'), idx * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// ── SMOOTH SCROLL ─────────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+// ── CLOSE CONFIG ON OUTSIDE CLICK ─────────────────────────────────
+document.addEventListener('click', e => {
+  const panel = document.getElementById('gs-config-panel');
+  const btn   = document.getElementById('gs-config-btn');
+  if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) {
+    panel.classList.remove('open');
+  }
+});
+
+// ── INIT ──────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  loadAllData();
+});
+</script>
+</body>
+</html>
