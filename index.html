@@ -1979,22 +1979,7 @@ window.addEventListener('DOMContentLoaded', () => {
   loadAllData();
 });
 </script>
-
- // Ganti dengan URL Apps Script kamu
-const API_URL = 'https://script.google.com/macros/s/AKfycbyihgvyFCRzbJ341GGOeN3JNdewDo1WI_xKt77C4M2bNiVJ9y_rp6Cef03-iQk2S17i9w/exec';
-
-// ── Fetch Pengumuman dari Sheets ──
-async function loadPengumuman() {
-  try {
-    const res = await fetch(`${API_URL}?sheet=pengumuman`);
-    const json = await res.json();
-    
-    const container = document.querySelector('.pengumuman-list');
-    container.innerHTML = '';
-    
-    json.data.forEach(item => {
-      container.innerHTML += `
-        <div class="pengumuman-item">
+         <div class="pengumuman-item">
           <div class="pengumuman-date">
             <div class="pengumuman-day">${item.tanggal}</div>
             <div class="pengumuman-month">${item.bulan}</div>
@@ -2006,42 +1991,5 @@ async function loadPengumuman() {
           </div>
         </div>`;
     });
-  } catch(err) {
-    console.error('Gagal load pengumuman:', err);
-  }
-}
-
-// ── Fetch Jadwal Misa dari Sheets ──
-async function loadJadwal() {
-  try {
-    const res = await fetch(`${API_URL}?sheet=jadwal`);
-    const json = await res.json();
-    // proses data jadwal...
-    console.log(json.data);
-  } catch(err) {
-    console.error('Gagal load jadwal:', err);
-  }
-}
-
-// Jalankan saat halaman load
-window.addEventListener('DOMContentLoaded', () => {
-  loadPengumuman();
-  loadJadwal();
-});
-```
-
----
-
-## ⚡ LANGKAH 4 — Update Konten Cukup Edit Spreadsheet!
-
-Setelah tersambung, alur kerjanya jadi sangat mudah:
-```
-Admin buka Google Sheets
-      ↓
-Tambah/edit/hapus baris data
-      ↓
-Simpan (Ctrl+S)
-      ↓
-Website otomatis tampilkan data terbaru saat di-refresh! ✅
 </body>
 </html>
